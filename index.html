@@ -19,6 +19,26 @@
         <div class="display">
             <!-- Cards go here -->
         </div>
+
+        <dialog class="modal-form">
+            <h3>Add new book</h3>
+            <form method="dialog" id="book-form">
+                <label for="book-title">
+                    <input type="text" name="book-title" id="book-title" placeholder="Title" required>
+                </label>
+                <label for="book-author">
+                    <input type="text" name="book-author" id="book-author" placeholder="Author" required>
+                </label>
+                <label for="book-pages">
+                    <input type="number" name="book-pages" id="book-pages" placeholder="Pages" min="1" required>
+                </label>
+                <label for="book-read">Read?
+                    <input type="checkbox" name="book-read" id="book-read">
+                </label>
+                <button type="submit" id="submit-form">Submit</button>
+                <button class="cancel">Cancel</button>
+            </form>
+        </dialog>
     </div>
     
     <script src="script.js"></script>

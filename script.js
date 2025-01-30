@@ -44,12 +44,12 @@ function displayBooks() {
         
         let author = document.createElement("p")
         author.classList.add("book-author")
-        author.textContent = book.author
+        author.textContent = "by " + book.author
         content.appendChild(author)
 
         let pages = document.createElement("p")
         pages.classList.add("book-pages")
-        pages.textContent = book.numPages
+        pages.textContent = book.numPages + " Pages"
         content.appendChild(pages)
 
         let readStatus = document.createElement("button")
@@ -104,4 +104,33 @@ function removeChildren(element) {
         element.removeChild(element.firstChild)
     }
 }
+
+const addBookBtn = document.querySelector("#add-book")
+const modal = document.querySelector(".modal-form")
+const bookForm = document.querySelector("#book-form")
+const cancelBtn = document.querySelector(".cancel")
+
+addBookBtn.addEventListener("click", () => {
+    modal.showModal()
+})
+
+const titleInput = document.querySelector("input#book-title")
+const authorInput = document.querySelector("input#book-author")
+const pageInput = document.querySelector("input#book-pages")
+const readInput = document.querySelector("input#book-read")
+
+bookForm.addEventListener("submit", () => {
+    addBookToLibrary(authorInput.value, titleInput.value, pageInput.value, readInput.checked)
+    modal.close()
+})
+
+cancelBtn.addEventListener("click", () => {
+    modal.close()
+})
+
+modal.addEventListener("close", () => {
+    bookForm.reset()
+})
+
+
 

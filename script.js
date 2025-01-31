@@ -16,9 +16,11 @@ function Book(author, title, numPages, isRead) {
         if (this.isRead) {
             this.isRead = false
             readBtn.textContent = "Not Read"
+            readBtn.style.backgroundColor = "pink"
         } else {
             this.isRead = true
             readBtn.textContent = "Read"
+            readBtn.style.backgroundColor = "lightgreen"
         }
     }
 }
@@ -39,7 +41,7 @@ function displayBooks() {
 
         let title = document.createElement("p")
         title.classList.add("book-title")
-        title.textContent = book.title
+        title.textContent = "\"" + book.title + "\""
         content.appendChild(title)
         
         let author = document.createElement("p")
@@ -55,8 +57,10 @@ function displayBooks() {
         let readStatus = document.createElement("button")
         if (book.isRead) {
             readStatus.textContent = "Read"
+            readStatus.style.backgroundColor = "lightgreen"
         } else {
             readStatus.textContent = "Not Read"
+            readStatus.style.backgroundColor = "pink"
         }
         readStatus.classList.add("book-read-status")
         readStatus.id = "read-" + book.id

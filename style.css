@@ -110,7 +110,7 @@ dialog {
     text-align: center;
     padding: 1.4rem;
     font-size: 1.2rem;
-    width: 20%;
+    width: clamp(16%, 300px, 30%)
 }
 
 h3 {

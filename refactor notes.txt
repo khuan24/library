@@ -1,0 +1,155 @@
+Key Takeaways:
+
+- Refactor Book into a class
+- Library functions are delegated to the libraryManager 
+- Display changes are delegated to the libraryDisplay
+- The display will not re-render the whole library when books are added or removed (needs testing)
+- Use a pubsub to notify the display about changes
+- Use dataset to keep track of book status
+
+// rough restructure plans below:
+class Book {
+    static #idCount = 0
+
+    constructor(author, title, numPages, isRead) {
+        this.author = author
+        this.title = title
+        this.numPages = numPages
+        this.isRead = isRead
+        this.id = #idCount
+
+        #idCount += 1
+    }
+
+    toggleReadStatus() {
+        if (this.isRead) {
+            this.isRead = false
+            //readBtn.textContent = "Not Read"
+            //readBtn.style.backgroundColor = "pink"
+        } else {
+            this.isRead = true
+            //readBtn.textContent = "Read"
+            //readBtn.style.backgroundColor = "lightgreen"
+        }
+        pubSub.notify("read-status-changed", this.isRead)
+    }
+}
+
+const libraryManager = (function() {
+
+    const library = []
+
+    const addBook = (author, title, numPages, isRead) => {
+        const book = new Book(author, title, numPages, isRead)
+        library.push(book)
+        pubSub.notify("book-added", book)
+    }
+
+    const removeBook = (id) => {
+        const index = library.map(book => book.id).indexOf(id)
+        library.splice(index, 1)
+
+        // const book = document.querySelector("#book-" + id)
+        // bookDisplay.removeChild(book)
+        pubSub.notify("book-removed", book.id)
+    }
+
+    const findBook = (id) => {
+        const index = library.map(book => book.id).indexOf(bookId)
+        return library[index]
+    }
+
+    return {
+        addBook,
+        removeBook.
+        findBook
+    }
+})()
+
+const libraryDisplay = (function() {
+    const displayDiv = document.querySelector(".display")
+
+    const addBookBtn = document.querySelector("#add-book")
+    const modal = document.querySelector(".modal-form")
+    const bookForm = document.querySelector("#book-form")
+    const cancelBtn = document.querySelector(".cancel")
+
+    const titleInput = document.querySelector("input#book-title").value
+    const authorInput = document.querySelector("input#book-author").value
+    const pageInput = document.querySelector("input#book-pages").value
+    const readInput = document.querySelector("input#book-read").checked
+
+    const updateDisplay = (book) => {
+        const cardDiv = document.createElement("div")
+        cardDiv.classList.add("card")
+
+        const title = document.createElement("p")
+        title.classList.add("book-title")
+        title.textContent = `"${book.title}"`
+        cardDiv.appendChild(title)
+        
+        const author = document.createElement("p")
+        author.classList.add("book-author")
+        author.textContent = "by " + book.author
+        cardDiv.appendChild(author)
+
+        const pages = document.createElement("p")
+        pages.classList.add("book-pages")
+        pages.textContent = book.numPages + " Pages"
+        cardDiv.appendChild(pages)
+
+        const readStatus = document.createElement("button")
+        //  move to css : select by "book-read-status[data-isRead="true"]"
+        if (book.isRead) {
+            readStatus.textContent = "Read"
+            readStatus.style.backgroundColor = "lightgreen"
+        } 
+        // select by "book-read-status[data-isRead="false"]"
+        else {
+            readStatus.textContent = "Not Read"
+            readStatus.style.backgroundColor = "pink"
+        }
+        // --
+
+        readStatus.classList.add("book-read-status")
+        readStatus.dataset.isRead = book.isRead
+        cardDiv.appendChild(readStatus)
+        readStatus.addEventListener("click", () => {
+            libraryManager.findBook(book.id).toggleReadStatus()
+        })
+
+        pubSub.subscribe("read-status-changed", (bookStatus) => {
+            readStatus.dataset.isRead = bookStatus
+        })
+
+        const removeBtn = document.createElement("button")
+        removeBtn.classList.add("remove-book")
+        removeBtn.textContent = "Remove"
+        cardDiv.appendChild(removeBtn)
+        removeBtn.addEventListener("click", () => {
+            libraryManager.removeBook(book.id)
+        })
+
+        pubSub.subscribe("book-removed", () => {
+            displayDiv.removeChild(cardDiv)
+        })
+
+        bookDisplay.appendChild(cardDiv)
+    }
+
+    pubSub.subscribe("book-added", updateDisplay)
+
+    addBookBtn.addEventListener("click", () => {
+        modal.showModal()
+    })
+
+    bookForm.addEventListener("submit", () => {
+        libraryManager.addBook(authorInput, titleInput, pageInput, readInput)
+        modal.close()
+    })
+
+    cancelBtn.addEventListener("click", () => {
+        modal.close()
+        bookForm.reset()
+    })
+})()

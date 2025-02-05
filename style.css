@@ -74,19 +74,22 @@ button:hover, .card button:hover {
 
 .display {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     justify-items: center;
     gap: 2rem;
+    padding-bottom: 2rem;
 }
 
 .card {
     background-color: white;
+    width: 100%;
     max-width: 350px;
     font-size: 1.2rem;
     border-radius: 5%;
     padding: 1.4rem;
     display: grid;
     justify-items: center;
+    text-align: center;
     box-shadow: rgb(228, 228, 228) 5px 5px 10px;
     padding: 2.5rem;
 }
@@ -95,6 +98,13 @@ button:hover, .card button:hover {
     margin-bottom: 1.2rem;
 }
 
+.book-read-status[data-read="true"] {
+    background-color: lightgreen;
+}
+
+.book-read-status[data-read="false"] {
+    background-color: pink;
+}
 
 .card button {
     border: none;
@@ -104,6 +114,10 @@ button:hover, .card button:hover {
 button, dialog, input {
     border-radius: 10px;
     border: solid black 3px;
+}
+
+button {
+    cursor: pointer;
 }
 
 dialog {

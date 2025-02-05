@@ -56,9 +56,6 @@ const libraryDisplay = (function() {
     const bookForm = document.querySelector("#book-form")
     const cancelBtn = document.querySelector(".cancel")
 
-    const bookToggleList = []
-    const bookRemoveList = []
-
     const updateDisplay = (book) => {
         // Create div
         const cardDiv = document.createElement("div")
@@ -140,4 +137,13 @@ const libraryDisplay = (function() {
     })
 
     cancelBtn.addEventListener("click", closeAndResetModal)
+})()
+
+const initLibrary = (function (){
+    // Add some books to be displayed
+    libraryManager.addBook("George Orwell", "1984", 328, true)
+    libraryManager.addBook("Harper Lee", "To Kill a Mockingbird", 281, false)
+    libraryManager.addBook("J.R.R. Tolkien", "The Hobbit", 310, true)
+    libraryManager.addBook("Suzanne Collins", "The Hunger Games", 374, false)
+    libraryManager.addBook("Yuval Noah Harari", "Sapiens: A Brief History of Humankind", 443, true)
 })()

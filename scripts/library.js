@@ -197,8 +197,6 @@ const libraryDisplay = (function() {
     const bookForm = document.querySelector("#book-form")
     const cancelBtn = document.querySelector(".cancel")
 
-
-
     const updateDisplay = (book) => {
 
     }

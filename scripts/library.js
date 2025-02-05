@@ -27,13 +27,13 @@ const libraryManager = (function() {
         const book = new Book(author, title, numPages, isRead)
         library.push(book)
         pubSub.notify("book-added", book)
-        console.table(library) //
+        // console.table(library) 
     }
 
     const removeBook = (id) => {
         const index = library.map(book => book.id).indexOf(id)
         library.splice(index, 1)
-        console.table(library) //
+        // console.table(library) 
     }
 
     const findBook = (id) => {

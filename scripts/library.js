@@ -79,7 +79,7 @@ const libraryDisplay = (function() {
         const readStatus = document.createElement("button")
         readStatus.classList.add("book-read-status")
         readStatus.dataset.read = book.isRead // allows css to control styling 
-        // text need to change dynamically
+        // text content need to change dynamically
         const setReadStatusText = (isRead) => {
             if (isRead) {
                 readStatus.textContent = "Read"
@@ -89,7 +89,6 @@ const libraryDisplay = (function() {
             }
         }
         setReadStatusText(book.isRead)
-        cardDiv.appendChild(readStatus)
         // add click event
         readStatus.addEventListener("click", () => {
             const target = libraryManager.findBook(book.id)
@@ -101,12 +100,17 @@ const libraryDisplay = (function() {
         const removeBtn = document.createElement("button")
         removeBtn.classList.add("remove-book")
         removeBtn.textContent = "Remove"
-        cardDiv.appendChild(removeBtn)
         // add click event
         removeBtn.addEventListener("click", () => {
             libraryManager.removeBook(book.id)
             displayDiv.removeChild(cardDiv)
         })
+        // Add buttons to group
+        const btnGroup = document.createElement("div")
+        btnGroup.classList.add("button-group")
+        btnGroup.appendChild(readStatus)
+        btnGroup.appendChild(removeBtn)
+        cardDiv.appendChild(btnGroup)
         // Render the card
         displayDiv.appendChild(cardDiv)
     }

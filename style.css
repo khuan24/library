@@ -21,8 +21,12 @@ img, svg, picture, video {
     max-width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
+    margin: 0;
+}
+
+p {
     margin: 0;
 }
 
@@ -87,15 +91,24 @@ button:hover, .card button:hover {
     font-size: 1.2rem;
     border-radius: 5%;
     padding: 1.4rem;
-    display: grid;
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     text-align: center;
+    gap: 0.8rem;
     box-shadow: rgb(228, 228, 228) 5px 5px 10px;
     padding: 2.5rem;
 }
 
-.book-pages {
-    margin-bottom: 1.2rem;
+.book-title {
+    font-weight: bold;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
 }
 
 .book-read-status[data-read="true"] {
@@ -106,7 +119,7 @@ button:hover, .card button:hover {
     background-color: pink;
 }
 
-.card button {
+.button-group button {
     border: none;
     background-color: rgb(243, 243, 243);
 }
@@ -137,14 +150,14 @@ form {
     font-size: 1rem;
 }
 
-form > * + *, .card > * + * {
+form > * + * {
     margin-top: 0.6rem;
 }
 
 form button, form input, .card button {
     width: 14rem;
     font-size: 1rem;
-    padding: 0.4em;
+    padding: 0.6em;
 }
 
 input[type="checkbox"] {
